@@ -1,7 +1,10 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"os"
+	"strings"
 
 	"example.com/note/note"
 )
@@ -19,18 +22,26 @@ func main() {
 }
 
 func getNoteData() (string, string) {
-	title := getUserInput("Note title:")
+	title := getUserInput("Note title: ")
 
-	content := getUserInput("Note content:")
+	content := getUserInput("Note content: ")
 
 	return title, content
 }
 
 func getUserInput(prompt string) string {
-	var input string
-
 	fmt.Print(prompt)
-	fmt.Scan(&input)
+	// fmt.Scan(&input)    Scan does not get long strings and hence
+	// a package 'bufio' should be used to get user data
+	reader := bufio.NewReader(os.Stdin)
+	text, err := reader.ReadString('\n')
 
-	return input
+	if err != nil {
+		return ""
+	}
+
+	text = strings.TrimSuffix(text, "\n")
+	text = strings.TrimSuffix(text, "\r")
+
+	return text
 }
