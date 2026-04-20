@@ -19,6 +19,14 @@ func main() {
 	}
 
 	note.Display()
+	err = note.Save()
+
+	if err != nil {
+		fmt.Println("Save note failed!")
+		return
+	}
+
+	fmt.Println("Save note successful!")
 }
 
 func getNoteData() (string, string) {
